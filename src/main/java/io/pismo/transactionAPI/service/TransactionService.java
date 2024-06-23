@@ -13,6 +13,7 @@ import io.pismo.transactionAPI.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
@@ -32,7 +33,9 @@ public class TransactionService {
                 .orElseThrow(() -> new AccountNotFoundException(requestDto.getAccountId()));
         OperationType requestedOp = operationTypeRepository.findById(requestDto.getOperationTypeId())
                 .orElseThrow(() -> new InvalidOperationTypeException(requestDto.getOperationTypeId()));
-        Transaction newTxn = Transaction.builder().account(requestedAcc).amount(requestDto.getAmount())
+        BigDecimal amount = requestedOp.isCredit() ? requestDto.getAmount() : requestDto.getAmount().negate();
+
+        Transaction newTxn = Transaction.builder().account(requestedAcc).amount(amount)
                                 .operationType(requestedOp).eventDate(LocalDateTime.now()).build();
         return transactionRepository.save(newTxn).toResponseDto();
     }
