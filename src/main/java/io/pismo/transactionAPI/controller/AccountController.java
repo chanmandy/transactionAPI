@@ -9,17 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/accounts")
 public class AccountController {
 
     @Autowired
     AccountService accountService;
 
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AccountResponseDto> getById(@PathVariable long id){
         return new ResponseEntity<>(accountService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/accounts")
+    @PostMapping
     public ResponseEntity<AccountResponseDto> create(@RequestBody AccountRequestDto account){
         return new ResponseEntity<>(accountService.createAccount(account),HttpStatus.OK);
     }

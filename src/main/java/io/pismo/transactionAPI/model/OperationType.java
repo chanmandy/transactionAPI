@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import static io.pismo.transactionAPI.enums.LedgerEntry.CREDIT;
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -16,7 +15,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor(access = PRIVATE)
-@Table(name = "operation")
+@Table(name = "operationType")
 @Data
 public class OperationType {
 
@@ -28,8 +27,8 @@ public class OperationType {
     @Column(length = 120, nullable = false)
     private String description;
 
-    @Enumerated(STRING)
-    @Column(nullable = false, updatable = false, columnDefinition = "ledger_entry")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, updatable = false, name = "ledger_entry")
     private LedgerEntry entry;
 
     public boolean isCredit() {

@@ -28,7 +28,7 @@ class AccountServiceTest {
     @Test
     void testFindById() {
         Account testAcc = Account.builder().id(1l).documentNumber("12345").build();
-        Mockito.doReturn(testAcc).when(accountRepository).findById(1l);
+        Mockito.doReturn(Optional.of(testAcc)).when(accountRepository).findById(1l);
         AccountResponseDto output = accountService.findById(1l);
         assertNotNull(output);
         assertEquals("12345",output.getDocumentNumber());
