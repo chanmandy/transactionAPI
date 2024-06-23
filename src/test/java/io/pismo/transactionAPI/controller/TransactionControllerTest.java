@@ -38,7 +38,7 @@ class TransactionControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content("{\"account_id\":1,\"operation_type_id\":1,\"amount\":100.0}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
         String strResult = result.getResponse().getContentAsString();
         assertTrue(strResult.contains("\"transaction_id\":1"));
@@ -47,25 +47,21 @@ class TransactionControllerTest {
     @Test
     void testCreateWithNonexistingAccount() throws Exception {
         Mockito.doThrow(new AccountNotFoundException(1l)).when(service).create(Mockito.any(TransactionRequestDto.class));
-        MvcResult result = mockMvc.perform(post("/transactions")
+        mockMvc.perform(post("/transactions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content("{\"account_id\":1,\"operation_type_id\":1,\"amount\":100.0}"))
-                .andExpect(status().is4xxClientError())
-                .andReturn();
-        assertEquals(404, result.getResponse().getStatus());
+                .andExpect(status().isNotFound());
     }
 
     @Test
     void testCreateWithInvalidOperationType() throws Exception {
         Mockito.doThrow(new InvalidOperationTypeException(1l)).when(service).create(Mockito.any(TransactionRequestDto.class));
-        MvcResult result = mockMvc.perform(post("/transactions")
+        mockMvc.perform(post("/transactions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content("{\"account_id\":1,\"operation_type_id\":1,\"amount\":100.0}"))
-                .andExpect(status().is4xxClientError())
-                .andReturn();
-        assertEquals(400, result.getResponse().getStatus());
+                .andExpect(status().isBadRequest());
     }
 
 }

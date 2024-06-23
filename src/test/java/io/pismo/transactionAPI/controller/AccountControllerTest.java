@@ -42,10 +42,8 @@ class AccountControllerTest {
     @Test
     void testGetByIdWithNonexistingAccount() throws Exception {
         Mockito.doThrow(new AccountNotFoundException(1l)).when(service).findById(Mockito.anyLong());
-        MvcResult result = mockMvc.perform(get("/accounts/1"))
-                .andExpect(status().is4xxClientError())
-                .andReturn();
-        assertEquals(404, result.getResponse().getStatus());
+        mockMvc.perform(get("/accounts/1"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -56,7 +54,7 @@ class AccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content("{\"document_number\":\"12345\"}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
         String strResult = result.getResponse().getContentAsString();
         assertTrue(strResult.contains("\"account_id\":1"));

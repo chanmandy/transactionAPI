@@ -1,5 +1,6 @@
 package io.pismo.transactionAPI.bean;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 
@@ -14,9 +15,10 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
+@Schema(description = "Account Creation Request")
 public class AccountRequestDto {
 
-    @NotNull
     @JsonProperty("document_number")
-    private String documentNumber;
+    @Schema(name = "document_number", description = "Document number for the account", example = "12345")
+    @NotNull private String documentNumber;
 }

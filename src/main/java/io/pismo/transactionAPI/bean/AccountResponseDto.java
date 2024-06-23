@@ -1,6 +1,7 @@
 package io.pismo.transactionAPI.bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +12,14 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 @AllArgsConstructor(access = PRIVATE)
 @Builder
+@Schema(description = "Account Response Object")
 public class AccountResponseDto {
 
-    @NotNull
     @JsonProperty("account_id")
-    private Long id;
+    @Schema(name = "id", description = "Identifier of the account", example = "1")
+    @NotNull private Long id;
 
-    @NotNull
     @JsonProperty("document_number")
-    private String documentNumber;
+    @Schema(name = "document_number", description = "Document number for the account", example = "12345")
+    @NotNull private String documentNumber;
 }
