@@ -2,11 +2,13 @@ package io.pismo.transactionAPI.bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 import static lombok.AccessLevel.PRIVATE;
 
+@Data
 @AllArgsConstructor(access = PRIVATE)
 public class TransactionRequestDto {
 

@@ -1,7 +1,10 @@
 package io.pismo.transactionAPI.model;
 
+import io.pismo.transactionAPI.bean.AccountResponseDto;
+import io.pismo.transactionAPI.bean.TransactionResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -14,6 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 @Table(name = "transaction")
+@Builder
 public class Transaction {
 
     @Id
@@ -33,4 +37,8 @@ public class Transaction {
     @Column(nullable = false, updatable = false)
     private LocalDateTime eventDate;
 
+    public TransactionResponseDto toResponseDto() {
+        return TransactionResponseDto.builder().transactionId(id).accountId(account.getId())
+                .operationTypeId(operationType.getId()).amount(amount).eventDate(eventDate).build();
+    }
 }

@@ -3,6 +3,7 @@ package io.pismo.transactionAPI.model;
 import io.pismo.transactionAPI.enums.LedgerEntry;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import static io.pismo.transactionAPI.enums.LedgerEntry.CREDIT;
@@ -14,6 +15,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 @Table(name = "operation")
+@Data
 public class OperationType {
 
     @Id

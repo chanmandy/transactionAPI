@@ -5,6 +5,7 @@ import io.pismo.transactionAPI.bean.TransactionRequestDto;
 import io.pismo.transactionAPI.bean.TransactionResponseDto;
 import io.pismo.transactionAPI.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,8 @@ public class TransactionController {
     TransactionService transactionService;
 
     @PostMapping("/transactions")
-    public ResponseEntity<TransactionResponseDto> create(@RequestBody TransactionRequestDto transaction){
-        //todo implementation
-        return null;
+    public ResponseEntity<TransactionResponseDto> create(@RequestBody TransactionRequestDto requestDto){
+        return new ResponseEntity<>(transactionService.create(requestDto), HttpStatus.OK);
     }
 
 }
