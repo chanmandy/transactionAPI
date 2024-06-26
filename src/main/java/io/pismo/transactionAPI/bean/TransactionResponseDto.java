@@ -39,4 +39,10 @@ public class TransactionResponseDto {
     @JsonProperty("event_date")
     @Schema(name = "event_date", description = "Transaction timestamp based on system timezone.", example = "2024-06-23T14:45:57.367378219")
     @NotNull private LocalDateTime eventDate;
+
+    @JsonProperty("balance")
+    @Schema(name = "balance", description = "A floating number which represents balance. " +
+            "<br>Negative value represents payment is not dischared for the transaction. Zero represents payment is successfully done ", example = "-100.00")
+    @NotNull private BigDecimal balance;
+
 }
